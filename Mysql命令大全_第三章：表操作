@@ -1,0 +1,56 @@
+3、表操作
+（1）、创建表
+  create[temporary] table [if not exists] [库名.]表名（表的结构定义）[表选项]
+  1）每个字段必须有数据类型，最后一个字段后不能有逗号
+  2）temporary 表示临时表，会话结束时表自动消失。
+  3）对于字段的定义：
+    字段名 数据类型[NOT NULL] [NULL] [DEFAULT default_value] [AUTO_INCREMENT]
+    [UNIQUE [KEY] | [PRIMARY] KEY ] [COMMENT 'string']
+  4)表选型
+    ①字符集
+      CHARSET = charset_name
+      如果表没有设定，则使用数据库字符集
+    ②存储引擎
+      ENGINE = engine_name
+      表在管理数据时往往采用不同的数据结构，结构不同会导致处理方式、提供的特性操作等也不同。
+      常见的存储引擎：InnoDB MyISAM Memory/Heap BDB Merge Example CSV MaxDB Archive
+      不同的存储引擎在保存表的结构和数据时常采用不同的方式。
+      MyISAM表文件的含义：.frm 表定义，.MYD 表数据，.MYI 表索引
+      InnoDB 表文件含义： .frm 表定义、表空间数据和日志文件
+      SHOW ENGINES  ---显示存储引擎的状态信息
+      SHOW ENGINE 引擎名｛LOGS|STATUS｝ --显示存储引擎的日志或状态信息
+
+  （2）、查看所有表
+      SHOW TABLES [LIKE 'pattern']
+      SHOW TABLES FROM '表名'
+  （3）、查看表结构
+      SHOW CREATE TABLE 表名
+      DESC 表名/DESCRIBE 表名 /EXPLAIN 表名 /SHOW COLUMNS FROM 表名[LIKE 'PATTERN']
+      SHOW TABLE STATUS[FROM db_name][LIKE 'pattern']
+  （4）、修改表
+      1）修改表本身的选项
+      ALTER TABLE 表名 表的选型
+      例：ALTER TABLE 表名 ENGINE=MYISAM;
+      2)对表进行重命名
+      RENAME TABLE 原表名 TO 新表名
+      3）修改表的字段结构
+        ALTER TABLE 表名 操作名
+        有如下操作名。
+        ADD[COLUMN] 字段名              --增加字段
+        ADD PRIMARY KEY(字段名)         --创建主键
+        ADD UNIQUE[索引名](字段名)       --创建唯一索引
+        ADD INDEX [索引名](字段名)       --创建普通索引
+        DROP [COLUMN] 字段名            --删除字段
+        MODIFY[COLUMN] 字段名  字段属性          --支持对字段属性进行修改
+        CHANGE[COLUMN] 原字段名 新字段名 字段属性 --支持对字段名进行修改
+        DROP PRIMARY KEY                --删除主键
+        DROP INDEX 索引名                -- 删除索引
+        DROP FOREIGN KEY 外键            --删除外键
+  （5）、删除表
+      DROP TABLE[IF EXISTS] 表名
+  （6）、清空表数据
+      TRUNCATE [TABLE]  表名
+  （7）、复制表结构
+    CREATE TABLE 表名 LIKE 要复制的表名
+  （8）、复制表结构和数据
+  CREATE TABLE 表名 [AS] SELECT * FROM 要复制的表名。
