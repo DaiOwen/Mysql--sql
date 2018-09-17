@@ -1,0 +1,11 @@
+Mysql、数据库、表、字段均可设置编码。
+--数据编码与客户端编码不需一致
+SHOW VARIABLES LIKE 'character_set_%' --查看所有字符集编码项
+character_set_client                  --客户端向服务器发送数据时使用的编码
+character_set_results                 --服务器端将结果返回给客户端使用的编码
+character_set_connection              --连接层编码
+SET 变量名 = 变量值
+setcharacter_set_client = gbk;
+setcharacter_set_results = gbk;
+setcharacter_set_connection = gbk;
+SET NAMES GBK;  --相当于完成以上三个设置
