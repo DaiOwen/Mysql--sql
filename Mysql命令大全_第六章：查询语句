@@ -1,0 +1,42 @@
+select [all|distinct] select_expr from -> where -> group by [合计函数] -> having -> order by -> limit
+(1)、select_expr
+1)计算公式、函数调用、字段也是表达式
+  例如：selectstu,29+25,now() from tb;
+2)可以使用as关键字为每个列设定别名，适用于简化列标识，避免多个列标识符重复。
+
+(2)、from子句
+用于标识查询来源
+1）可以使用as关键字为表起别名
+例如：select * from tb1 as tt,tb2 as bb;
+2)from 子句后面可以同时出现多个表，多个表会横向叠加在一起，而数据会形成一个笛卡尔积。
+例如：select * from tb1,tb2;
+
+(3)、where子句
+用于从from获得的数据源进行筛选。1标识真，0表示假。表达式由运算符和运算数组成。
+
+(4)、group by 子句(分组子句)
+group by 子段/别名 [排序方式]
+分组后会进行排序。升序： ASC,降序：DESC。
+以下聚合函数需配合group by 子句一起使用：
+count  返回不同的非NULL值数目，如count(*)、count(字段)。
+sum   求和
+max   求最大值
+min   求最小值
+avg   求平均值
+group_concat   返回带有来自一个组的连接的非NULL值的字符结果，为组内字符串连接。
+
+(5)、having子句(条件子句)
+与where功能、用法相同，只是执行的时机不同。where在开始时执行数据检测，对原数据进行过滤。having对筛选出的结果再次进行过滤。where不可以
+使用聚合函数。一般需用到聚合函数才会用having。SQL标准要求having子句必须引用group by 子句中的列或用于聚合函数中的列。
+
+(6)、order by 子句(排序子句)
+order by 排序字段/别名排序方式[,排序字段/别名排序方式]...
+order by 子句支持对多个字段进行排序。升序：ASC,降序：DESC
+
+(7)、limit 子句(限制结果数量子句)
+仅对处理好的结果进行数量限制。将处理好的结果看做是一个集合，按照记录出现的先后顺序，索引从0开始。
+limit 起始位置，获取条数
+省略第一个参数，表示索引从0开始。即limit 获取条数。
+
+(8)、distinct 选项
+用于去除重复记录
