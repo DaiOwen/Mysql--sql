@@ -1,0 +1,29 @@
+(1)、UNION
+将多个select查询的结果组合成一个结果集合。
+select ... UNION[ALL|DISTINCT] select ...
+默认为DISTINCT方式，即将所有返回的行都是唯一的。建议对每个select查询加上小括号。需要各select查询的字段数量一样，
+即每个select查询的字段列表(数量、类型)应一致，因为结果中的字段名以第一条select语句为准。
+
+(2)、子查询
+子查询用括号括起来。
+1）from型
+from 后要求是一个表，必须给子查询结果取个别名，以简化每个查询内的条件。
+例：select * from (select * from tb where id>0) as subfrom where id>1;
+2)where型
+子查询返回一个值，不需要给子查询取别名
+例：select * from tb where money = (select max(money) from tb);
+3)列子查询
+使用in或not in 子查询，查询结果返回单列。
+使用exists和not exists 条件，返回1或0，常用于判断条件。
+例：select column1 from t1 where exists(select * from t2);
+
+(3)、join连接查询
+将多个表的字段进行连接，可以指定连接条件。
+1）内连接(inner join)
+默认就是内连接，可省略inner,只有数据存在时才能发送连接请求，即连接结果不能出现空行，on表示连接条件，其条件表达式与where类似
+2）交叉连接(cross join)
+例:select * from tb1 cross tb2;
+3)外连接(outer join)
+如果数据不存在，也会出现在连接结果中。包括：
+左外连接(left outer join),即如果数据不存在，左记录会出现，而右表以null填充。
+右外连接(right outer join)，如果数据不存在，右表记录会出现，而左表以null填充。
